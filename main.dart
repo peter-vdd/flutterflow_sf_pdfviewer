@@ -45,21 +45,33 @@ class _PdfViewState extends State<PdfView> {
   }
 
   @override
+  void didUpdateWidget(PdfView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.pageNr != oldWidget.pageNr) {
+      _pdfViewerController.jumpToPage(widget.pageNr ?? 1);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     String title = (widget.docName ?? 'Preview');
     title = title.length > 30 ? title.substring(0, 30) + '...' : title;
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        toolbarHeight: 28.0,
         title: Text(
           title,
           overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontSize: 14.0),
         ),
         actions: <Widget>[
           IconButton(
             icon: Icon(
               Icons.keyboard_arrow_up,
               color: Colors.white,
+              size: 14.0,
             ),
             onPressed: () {
               _pdfViewerController.previousPage();
@@ -69,6 +81,7 @@ class _PdfViewState extends State<PdfView> {
             icon: Icon(
               Icons.keyboard_arrow_down,
               color: Colors.white,
+              size: 14.0,
             ),
             onPressed: () {
               _pdfViewerController.nextPage();
