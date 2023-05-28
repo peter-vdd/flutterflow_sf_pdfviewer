@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'dart:math';
 
 class PdfView extends StatefulWidget {
   const PdfView({
@@ -19,12 +20,14 @@ class PdfView extends StatefulWidget {
     this.height,
     this.docUrl,
     this.pageNr,
+    this.docName,
   }) : super(key: key);
 
   final double? width;
   final double? height;
   final String? docUrl;
   final int? pageNr;
+  final String? docName;
 
   @override
   _PdfViewState createState() => _PdfViewState();
@@ -43,9 +46,15 @@ class _PdfViewState extends State<PdfView> {
 
   @override
   Widget build(BuildContext context) {
+    String title = (widget.docName ?? 'Preview');
+    title = title.length > 30 ? title.substring(0, 30) + '...' : title;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Preview'),
+        title: Text(
+          title,
+          overflow: TextOverflow.ellipsis,
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -71,6 +80,7 @@ class _PdfViewState extends State<PdfView> {
         widget.docUrl ??
             'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
         key: _pdfViewerKey,
+        controller: _pdfViewerController,
       ),
     );
   }
