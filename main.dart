@@ -33,8 +33,11 @@ class PdfView extends StatefulWidget {
 class _PdfViewState extends State<PdfView> {
   final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
 
+  late PdfViewerController _pdfViewerController;
+
   @override
   void initState() {
+    _pdfViewerController = PdfViewerController();
     super.initState();
   }
 
@@ -42,22 +45,31 @@ class _PdfViewState extends State<PdfView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Syncfusion Flutter PDF Viewer'),
+        title: const Text('Preview'),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(
-              Icons.bookmark,
+            icon: Icon(
+              Icons.keyboard_arrow_up,
               color: Colors.white,
-              semanticLabel: 'Bookmark',
             ),
             onPressed: () {
-              _pdfViewerKey.currentState?.openBookmarkView();
+              _pdfViewerController.previousPage();
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              _pdfViewerController.nextPage();
             },
           ),
         ],
       ),
       body: SfPdfViewer.network(
-        'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
+        widget.docUrl ??
+            'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
         key: _pdfViewerKey,
       ),
     );
