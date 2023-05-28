@@ -8,6 +8,8 @@ docUrl (str) = PDF URL
 
 pageNr (int) = Page Number
 
+docName (str) = Document Name
+
 Pubspec Dependencies: syncfusion_flutter_pdfviewer: ^21.2.3
 
 Add this code in Web Publishing > Custom Headers: 
