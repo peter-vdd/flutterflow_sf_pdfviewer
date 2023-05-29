@@ -55,10 +55,12 @@ class _PdfViewState extends State<PdfView> {
   @override
   Widget build(BuildContext context) {
     String title = (widget.docName ?? 'Preview');
-    title = title.length > 30 ? title.substring(0, 30) + '...' : title;
+    title = title.length > 50 ? title.substring(0, 50) + '...' : title;
 
     return Scaffold(
+      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         automaticallyImplyLeading: false,
         toolbarHeight: 28.0,
         title: Text(
@@ -67,6 +69,16 @@ class _PdfViewState extends State<PdfView> {
           style: TextStyle(fontSize: 14.0),
         ),
         actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.zoom_in,
+              color: Colors.white,
+              size: 14.0,
+            ),
+            onPressed: () {
+              _pdfViewerController.zoomLevel = 2;
+            },
+          ),
           IconButton(
             icon: Icon(
               Icons.keyboard_arrow_up,
